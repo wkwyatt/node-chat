@@ -4,10 +4,27 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title></title>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+
+	var socketio = io.connect("12.7.0.0.1:21000");
+	socketio.on('message_to_client', function(data) {
+		document.getElementById('chat-window').innerHTML = ("<hr />" + data['message'])
+	});
+
+	function sendMessage() {
+		var message = document.getElementById('message').value;
+		socketio.emit('message_to_server', 
+		{
+			message: message
+		});
+	}
+
+	</script>
 	<link rel="stylesheet" href="">
 </head>
 <body>
-	<input type="text">
+	<input id="message" type="text">
 	<button onclick="sendMessage()" type=""></button>	
 	<div id="chat-window"></div>
 </body>
